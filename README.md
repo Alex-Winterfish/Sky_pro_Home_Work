@@ -7,3 +7,5 @@
 
 - Клонируйте репозиторий:
 ``` git@github.com:Alex-Winterfish/Sky_pro_Home_Work.git```
+- Установите зависимости
+```pip install -r requirements.txt```
