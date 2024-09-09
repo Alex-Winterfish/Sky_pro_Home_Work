@@ -4,8 +4,9 @@
 - witget - модуль накладывает маски на счета и карты, а так же выводит дату в требуемом формате
 - processing - модуль принимает список словарей. Выводит список словарей с заданным ключом, сортирует список словарей дате
 ## Установка:
-
+- требования:
+```Python 3.12+```
 - Клонируйте репозиторий:
-``` git@github.com:Alex-Winterfish/Sky_pro_Home_Work.git```
+```git@github.com:Alex-Winterfish/Sky_pro_Home_Work.git```
 - Установите зависимости
 ```pip install -r requirements.txt```
