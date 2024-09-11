@@ -19,7 +19,10 @@ def get_mask_card_number(card_num: int) -> str:
         return "номер карты слишком короткий для наложения маски"
 
 
-
 def get_mask_account(account: int) -> str:
     """Функция, которая принимает номер счета и возвращает маску номера"""
-    return "**" + str(account)[-4:]
+    return (
+        "**" + str(account)[-4:]
+        if len(str(account)) > 4
+        else "номер счета слишком короткий для наложения маски"
+    )
