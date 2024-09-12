@@ -10,3 +10,8 @@
 ```git@github.com:Alex-Winterfish/Sky_pro_Home_Work.git```
 - Установите зависимости
 ```pip install -r requirements.txt```
+
+## тестирование
+Написаны тесты для модулей masks, processing, witget
+Для запуска тестов:
+```poetry run pytest --cov```
