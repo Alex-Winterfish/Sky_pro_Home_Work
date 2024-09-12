@@ -1,7 +1,8 @@
-from masks import \
-    get_mask_account  # импорт функции для наложения маски на номер счета
-from masks import \
-    get_mask_card_number  # импорт функции для наложения маски на номер карты
+from src.masks import (  # импорт функции для наложения маски на номер счета;
+    # импорт функции для наложения маски на номер карты
+    get_mask_account,
+    get_mask_card_number,
+)
 
 
 def mask_account_card(card_ac_num: str) -> str:
@@ -14,7 +15,7 @@ def mask_account_card(card_ac_num: str) -> str:
 
         while card_ac_num[-count] != " ":  # цикл для определения индекса начала цифр
             count += 1
-        return (
+        output_string = (
             card_ac_num[0 : len(card_ac_num) - count]
             + " "
             + get_mask_card_number(int(card_ac_num[-count::]))
@@ -23,13 +24,32 @@ def mask_account_card(card_ac_num: str) -> str:
     else:
         while card_ac_num[-count] != " ":
             count += 1
-        return (
+        output_string = (
             card_ac_num[0 : len(card_ac_num) - count]
             + " "
             + get_mask_account(int(card_ac_num[-count::]))
         )
+    if "*" in output_string:  # условие для исключения коротких номеров
+        return output_string
+    else:
+        return "Номер слишком короткий для наложения маски"
 
 
 def get_date(date: str) -> str:
     """функция выводит дату в формате ДД.ММ.ГГГГ"""
-    return date[8:10] + "." + date[5:7] + "." + date[0:4]
+    date_store = ""  # переменная для накопления строки с датой
+    count_index = 1  # переменная счетчик для определения индекса конца даты
+    if date.find("T") != -1:
+        while date[count_index] != "T":
+            count_index += 1
+
+        date = date[0:count_index]  # срез строки, содержащий только дату
+        for i in range(len(date)):  # цикл для замены разделителей год.месяц.число
+            if date[i].isdigit():
+                date_store += date[i]
+            else:
+                date_store += "."
+
+        return date_store
+    else:
+        return "0001.01.01"

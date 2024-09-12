@@ -12,8 +12,12 @@ from src.masks import get_mask_account, get_mask_card_number
         (353587938, "номер карты слишком короткий для наложения маски"),
     ],
 )
-def test_get_mask_card_number(input_int, output_string):
+def test_get_mask_card_number_1(input_int, output_string):
     assert get_mask_card_number(input_int) == output_string
+
+
+def test_get_mask_card_number_2(test_card_number_1):
+    assert get_mask_card_number(test_card_number_1) == "3287 68** **** ***2 873"
 
 
 @pytest.mark.parametrize(
@@ -25,5 +29,9 @@ def test_get_mask_card_number(input_int, output_string):
         (7938, "номер счета слишком короткий для наложения маски"),
     ],
 )
-def test_get_mask_account(input_int, output_string):
+def test_get_mask_account_1(input_int, output_string):
     assert get_mask_account(input_int) == output_string
+
+
+def test_get_mask_account_2(test_card_number_1):
+    assert get_mask_account(test_card_number_1) == "**2873"

@@ -1,5 +1,7 @@
 from datetime import datetime  # импорт функции для работы с датой
 
+from src.witget import get_date
+
 
 def filter_by_state(input_list: list, state: str = "EXECUTED") -> list:
     """Функция принимает список словарей и параметр.
@@ -18,7 +20,7 @@ def sort_by_date(input_list: list, sort_option: bool = True) -> list:
     return sorted(
         input_list,
         key=lambda input_list: datetime.strptime(
-            input_list["date"][0:10], "%Y-%m-%d"
+            get_date(input_list["date"]), "%Y.%m.%d"
         ).date(),
         reverse=sort_option,
     )
