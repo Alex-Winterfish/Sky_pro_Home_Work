@@ -1,0 +1,4 @@
+
+
+
+Функция my_division: ошибка:division by zero, входные данные (2, 0)
