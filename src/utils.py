@@ -2,9 +2,9 @@ import os
 
 
 def get_transaction_data(file_path:str):
-
+    import os
     import json
-    with open((file_path)) as f:
+    with open((os.path.abspath(file_path))) as f:
         data = json.load(f)
     return data
 
