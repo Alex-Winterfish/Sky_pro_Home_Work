@@ -65,6 +65,7 @@ print(next(card_nunber))
 ```git@github.com:Alex-Winterfish/Sky_pro_Home_Work.git```
 - Установите зависимости
 ```pip install -r requirements.txt```
+```poetry add reguests```
 
 ## тестирование
 Написаны тесты для модулей masks, processing, witget, decorators
