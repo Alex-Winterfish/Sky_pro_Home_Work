@@ -1,8 +1,11 @@
+from unittest.mock import Mock, patch
 
 from src.external_api import amount_exchange
 from src.utils import get_transaction_data, transaction_sum
-from unittest.mock import Mock, patch
+
+
 def test_get_transaction_data_1(test_file_path_1):
+    """Функция проверяет чтение json файла"""
     assert get_transaction_data(test_file_path_1) == [
         {
             "id": 441945886,
@@ -1198,53 +1201,65 @@ def test_get_transaction_data_1(test_file_path_1):
     ]
 
 
-def test_get_transaction_data_2(test_file_path):
-    # функция проверяет ошибку декодирования
-    mock_connection_error = Mock(return_value = 'Ошибка декодирования файла')
+def test_get_transaction_data_2(test_file_path_1):
+    """функция проверяет ошибку декодирования"""
+    mock_connection_error = Mock(return_value="Ошибка декодирования файла")
     get_transaction_data = mock_connection_error
-    assert get_transaction_data(test_file_path) == 'Ошибка декодирования файла'
-    mock_connection_error.assert_called_once_with(test_file_path)
+    assert get_transaction_data(test_file_path_1) == "Ошибка декодирования файла"
+    mock_connection_error.assert_called_once_with(test_file_path_1)
 
-def test_get_transaction_data_3(test_file_path):
-    # функция проверяет ошибку "файл не найден"
-    mock_connection_error = Mock(return_value = 'Файл не найден')
+
+def test_get_transaction_data_3(test_file_path_1):
+    """функция проверяет ошибку "файл не найден"""
+    mock_connection_error = Mock(return_value="Файл не найден")
     get_transaction_data = mock_connection_error
-    assert get_transaction_data(test_file_path) == 'Файл не найден'
-    mock_connection_error.assert_called_once_with(test_file_path)
+    assert get_transaction_data(test_file_path_1) == "Файл не найден"
+    mock_connection_error.assert_called_once_with(test_file_path_1)
 
-@patch('src.external_api.amount_exchange')
+
+@patch("src.external_api.amount_exchange")
 def test_transaction_sum_1(mock_exchange):
+    """Функция проверяет правильность конвертации валюты при запросе к внешнему API"""
     mock_exchange.return_value = 19648.14
-    assert transaction_sum({
-            "id": 939719570,
-            "state": "EXECUTED",
-            "date": "2018-06-30T02:08:58.425572",
-            "operationAmount": {
-                "amount": "9824.07",
-                "currency": {"name": "USD", "code": "USD"},
-            },
-            "description": "Перевод организации",
-            "from": "Счет 75106830613657916952",
-            "to": "Счет 11776614605963066702",
-        }) == 19648.14
-    mock_exchange.assert_called_once_with(9824.07,'USD','RUB')
+    assert (
+        transaction_sum(
+            {
+                "id": 939719570,
+                "state": "EXECUTED",
+                "date": "2018-06-30T02:08:58.425572",
+                "operationAmount": {
+                    "amount": "9824.07",
+                    "currency": {"name": "USD", "code": "USD"},
+                },
+                "description": "Перевод организации",
+                "from": "Счет 75106830613657916952",
+                "to": "Счет 11776614605963066702",
+            }
+        )
+        == 19648.14
+    )
+    mock_exchange.assert_called_once_with(9824.07, "USD", "RUB")
 
-@patch('src.external_api.requests.request')
-def test_amount_exchange(mock_get):
-    mock_get.requests.request = {
-  "date": "2018-02-22",
-  "historical": "",
-  "info": {
-    "rate": 148.972231,
-    "timestamp": 1519328414
-  },
-  "query": {
-    "amount": 20,
-    "from": "USD",
-    "to": "RUB"
-  },
-  "result": 3724.305775,
-  "success": "true"
-}
-    assert amount_exchange(25,"USD","RUB") == 3724.305775
-    mock_get.assert_called_once_with(25,"USD","RUB")
+
+@patch("requests.request")
+def test_amount_exchange_1(mock_get):
+    """Функция проверяет правильность конвертации валюты при запросе к внешнему API"""
+    import os
+
+    api = os.getenv("API_EXCHANGE_KEY")
+    mock_get.return_value.json.return_value = {
+        "date": "2018-02-22",
+        "historical": "",
+        "info": {"rate": 148.972231, "timestamp": 1519328414},
+        "query": {"amount": 20, "from": "USD", "to": "RUB"},
+        "result": 2355.608025,
+        "success": "true",
+    }
+    assert amount_exchange(25, "USD", "RUB") == 2355.608025
+    mock_get.assert_called_once_with(
+        "GET",
+        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=25",
+        headers={"apikey": api},
+        data={},
+        timeout=5,
+    )
