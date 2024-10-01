@@ -26,7 +26,7 @@ def get_mask_card_number(card_num: int) -> str:
         logger.info("Выводим маску номера")
         return card_num_mask_delimited[0:-1]
     else:
-        logger.error("номер каты слишком короткий")
+        logger.error("номер карты слишком короткий")
         return "номер карты слишком короткий для наложения маски"
 
 card_mask = get_mask_card_number(8768)
@@ -36,8 +36,10 @@ card_mask = get_mask_card_number(8768)
 
 def get_mask_account(account: int) -> str:
     """Функция, которая принимает номер счета и возвращает маску номера"""
-    return (
-        "**" + str(account)[-4:]
-        if len(str(account)) > 4
-        else "номер счета слишком короткий для наложения маски"
-    )
+    if len(str(account)) > 4:
+        logger.info("введен номер  счета достаточной длинны для наложения маски, накладываем маску")
+        return "**" + str(account)[-4:]
+    else:
+        logger.error("номер счета слишком короткий для наложения маски")
+        return "номер счета слишком короткий для наложения маски"
+account_mask = get_mask_account(23443232)
