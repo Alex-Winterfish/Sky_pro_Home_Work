@@ -1,6 +1,6 @@
 import logging
 logger = logging.getLogger("masks")
-handler = logging.FileHandler('../logs/masks.log')
+handler = logging.FileHandler('../logs/masks.log', 'w')
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
 handler.setFormatter(formatter)
@@ -29,9 +29,7 @@ def get_mask_card_number(card_num: int) -> str:
         logger.error("номер карты слишком короткий")
         return "номер карты слишком короткий для наложения маски"
 
-card_mask = get_mask_card_number(8768)
-
-
+card_mask = get_mask_card_number(87685464564564546)
 
 
 def get_mask_account(account: int) -> str:
