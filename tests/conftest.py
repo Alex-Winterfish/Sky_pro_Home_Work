@@ -1,5 +1,5 @@
 import pytest
-
+import os
 
 @pytest.fixture
 def test_card_number_1():
@@ -135,3 +135,8 @@ def test_transaction_1():
             "to": "Счет 14211924144426031657",
         },
     ]
+import pathlib
+
+@pytest.fixture
+def test_file_path_1():
+    return "../data/operations.json"
