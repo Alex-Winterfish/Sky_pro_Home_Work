@@ -15,5 +15,14 @@ def csv_processing(filepath:str)->list:
     return output_list
 
 
-print(csv_processing(filepath))
-print(f'число элемнтов списка {len(csv_processing(filepath))}')
+#print(csv_processing(filepath))
+#print(f'число элемнтов списка {len(csv_processing(filepath))}')
+
+filepath_excel = '../data/transactions_excel.xlsx'
+def excel_processing(filepath:str):
+    import pandas as pd
+    transaction_data_xls = pd.read_excel(filepath)
+    x = "id"
+    return transaction_data_xls[x][0]
+
+print(excel_processing(filepath_excel))
