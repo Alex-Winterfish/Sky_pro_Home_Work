@@ -7,6 +7,7 @@
 - decorators - модуль содержит декоратор log, который выполняет логирование функций
 - utils - модуль содержит функцию get_transaction_data, которая принимает путь до json-файла и возвращает список словарей, функцию transaction_sum, которая выводит сумму транзакции в рублях
 - external_api - модуль содержит функцию amount_exchange, которая конвертирует сумму из одной валюты в другую с помощью внешнего API
+- dataframe_processing - модуль содержит функции для вывода списка словарей с транзакциями из файлов .csv и .xls
 ## Примеры работы функций
 Функция transaction_descriptions выводит тип транзакции
 ```
@@ -69,6 +70,7 @@ print(next(card_nunber))
 ```pip install -r requirements.txt```
 ```poetry add reguests```
 ```poetry add python-dotenv```
+```poetry add pandas```
 
 ## тестирование
 Написаны тесты для модулей masks, processing, witget, decorators, utils, external_api
@@ -77,4 +79,17 @@ print(next(card_nunber))
 
 ## Файл .env.sample
 содержит примеры переменных окружения, которые необходимы для работы проекта
+
+## Логирование
+Реализовано логирование для модулей utils и masks. Логи функций записываются соответственно в utils.log и masks.log
+
+Для проверки логирования раскомитить строки:
+
+```#card_mask = get_mask_card_number(87685464564564546) #раскомитить для проверки лигирования```
+
+```#account_mask = get_mask_account(23443232) #раскомитить для проверки лигирования```
+
+```#file_path = "../data/operations.json" #раскомитить для проверки лигирования #раскомитить для проверки лигирования```
+
+```#transaction_sum(transaction_data[0]) #раскомитить для проверки лигирования```
 
