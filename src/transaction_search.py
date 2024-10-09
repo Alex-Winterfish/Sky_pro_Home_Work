@@ -1,36 +1,62 @@
-from re import search
+from collections import defaultdict
+from itertools import count
+from logging import raiseExceptions
 
-from openpyxl.styles.builtins import output
+from src.dataframe_processing import csv_processing
 
-"Counter({'Перевод с карты на карту': 285, 'Открытие вклада': 97, 'Перевод организации': 70, 'Перевод со счета на счет': 47, '': 1})"
-
-from src.dataframe_processing import excel_processing, csv_processing
-from src.utils import get_transaction_data
-
-def user_search(transaction_list:list)->list:
-    input_string = input('введите слово для поиска')
-    output_list = list()
+def user_search(transaction_list:list, search_str)->list:
+    '''Функция выполняет поиск во входном списке словарей опреаци по заданному слову'''
+    output_list = list() #переменная для накопления найденных транзакций
     import re
-    pattern = re.compile(r'\D*')
-    search_pattern = pattern.finditer(input_string)
-    for i in range(len(transaction_list)):
-        if search_pattern(transaction_list[i].get('description')):
+
+    for i in range(len(transaction_list)): #цикл для поиска транзакций
+
+        search_pattern = re.search(f'{search_str}', transaction_list[i].get('description'), flags = re.I)
+        if search_pattern is not None:
             output_list.append(transaction_list[i].get('description'))
+    if output_list == []:
+        return 'транзакции не найдены'
+    else:
+        return output_list
 
-    print(output_list)
-
-from collections import Counter
-
-def descriptoin_count(input_list):
+def transaction_discripption(transaction_list:list)->list:
+    '''Функция принимает список с транзакциями, возвращает список со всеми типами транзакций'''
     output_list = list()
-    for description in input_list.values():
-        output_list.append(description)
-    counted = Counter(output_list)
-    return counted
+    for i in range(len(transaction_list)):
+        if transaction_list[i].get("description") != "":
+            output_list.append(transaction_list[i].get("description"))
+    output_list = set(output_list)
+    output_list = list(output_list)
+
+    return output_list
+
+def transaction_count(transaction_list:list, transaction_type:list)->dict:
+
+    from collections import Counter
+    list_of_transaction = list()
+    for i in range(len(transaction_list)):
+        if transaction_list[i].get("description") != "":
+            list_of_transaction.append(transaction_list[i].get("description"))
+    counted_transactions = Counter(list_of_transaction)
+    output_dict = dict()
+    for types in transaction_type:
+        output_dict[types] = counted_transactions[types]
+
+
+
+    return output_dict
+
+
+
+
+
 
 if __name__ == '__main__':
     filepath = "../data/transactions.csv"
 
+    #input_string = input('введите слово для поиска')
     input_list = csv_processing(filepath)
+    trans_type = transaction_discripption(input_list)
+    #['Открытие вклада', 'Перевод с карты на карту', 'Перевод организации']
 
-    user_search(input_list)
+    print(transaction_count(input_list, trans_type))
