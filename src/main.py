@@ -1,3 +1,4 @@
+from trace import Trace
 
 file_path_json = "../data/operations.json"
 file_path_csv = "../data/transactions.csv"
@@ -26,16 +27,20 @@ def main():
     elif user_input == "3":# получаем список транзакций из excel файла
         print("Для обработки выбран excel-файл")
         transaction_list = excel_processing(file_path_excel)
+
     while True:
+
         state = input("Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтрации статусы:\n"
                   "EXECUTED, CANCELED, PENDING\n"
                   "ввод: ").upper()
-        if state == "EXECUTED" or "CANCELED" or "PENDING":
+
+        if state in ["EXECUTED", "CANCELED", "PENDING"]:
             break
-            print(f'Операции отфильтрованы по статусу {state}')
         else:
             print(f"Статус операции {state} недоступен")
     output_data = filter_by_state(transaction_list, state=state)
+    print(f'Операции отфильтрованы по статусу {state}')
+
 
 
     return output_data
