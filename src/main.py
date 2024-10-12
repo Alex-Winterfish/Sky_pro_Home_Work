@@ -1,12 +1,13 @@
+
 from src.utils import get_transaction_data
 from src.dataframe_processing import csv_processing, excel_processing
 from src.processing import filter_by_state, sort_by_date
 from src.transaction_search import user_search
 from src.witget import get_date, mask_account_card
 
-file_path_json = "../data/operations.json"
+file_path_json = "./data/operations.json"
 file_path_csv = "./data/transactions.csv"
-file_path_excel = "../data/transactions_excel.xlsx"
+file_path_excel = "./data/transactions_excel.xlsx"
 
 
 def user_file_select():
@@ -119,7 +120,7 @@ def main():
                 print(
                     f"{get_date(filtered_data[i].get('date'))} {filtered_data[i].get('description')}\n"
                     f"{mask_account_card(filtered_data[i].get('from'))} \
-                    -> {mask_account_card(filtered_data[i].get('to'))}\n"
+-> {mask_account_card(filtered_data[i].get('to'))}\n"
                     f"Сумма: {filtered_data[i].get('amount')} {filtered_data[i].get('currency_name')}\n\n"
                 )
 

@@ -16,19 +16,6 @@ def user_search(transaction_list: list, search_str) -> list:
     else:
         return output_list
 
-
-def transaction_discripption(transaction_list: list) -> list:
-    """Функция принимает список с транзакциями, возвращает список со всеми типами транзакций"""
-    output_list = list()
-    for i in range(len(transaction_list)):
-        if transaction_list[i].get("description") != "":
-            output_list.append(transaction_list[i].get("description"))
-    output_list = set(output_list)
-    output_list = list(output_list)
-
-    return output_list
-
-
 def transaction_count(transaction_list: list, transaction_type: list) -> dict:
 
     from collections import Counter
