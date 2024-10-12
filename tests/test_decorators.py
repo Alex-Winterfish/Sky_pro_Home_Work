@@ -7,7 +7,7 @@ def test_my_division_1(capsys):
     def my_division(x, y):
         return x / y
 
-    result = my_division(4, 2)
+    my_division(4, 2)
     captured = capsys.readouterr()
     assert captured.out == "Функция my_division: результат выполнения:2.0\n"
 
@@ -18,7 +18,7 @@ def test_my_division_2(capsys):
     def my_division(x, y):
         return x / y
 
-    result = my_division(4, 0)
+    my_division(4, 0)
     captured = capsys.readouterr()
     assert (
         captured.out

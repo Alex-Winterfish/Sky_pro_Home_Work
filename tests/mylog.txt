@@ -1,0 +1,5 @@
+
+Функция my_division: результат выполнения:2.0
+Функция my_division: ошибка:division by zero, входные данные (4, 0)
+Функция my_division: ошибка:my_division() missing 2 required positional arguments: 'x' and 'y', входные данные ()
+Функция my_division: ошибка:my_division() missing 2 required positional arguments: 'x' and 'y', входные данные ()
