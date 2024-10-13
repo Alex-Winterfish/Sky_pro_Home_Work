@@ -44,6 +44,3 @@ def excel_processing(filepath: str) -> list:
         return output_list
     except FileNotFoundError:
         return f"Файл по адресу {filepath_excel} не найден"
-
-
-print(csv_processing(filepath))

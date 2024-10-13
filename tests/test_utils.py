@@ -1,5 +1,6 @@
 from unittest.mock import Mock, patch
 
+
 from src.external_api import amount_exchange
 from src.utils import get_transaction_data, transaction_sum
 

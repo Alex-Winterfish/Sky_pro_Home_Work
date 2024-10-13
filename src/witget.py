@@ -1,5 +1,7 @@
 from src.masks import (  # импорт функции для наложения маски на номер счета и на номер карты
-    get_mask_account, get_mask_card_number)
+    get_mask_account,
+    get_mask_card_number,
+)
 
 
 def mask_account_card(card_ac_num: str) -> str:

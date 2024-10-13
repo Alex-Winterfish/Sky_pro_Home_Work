@@ -1,13 +1,13 @@
 import logging
 
 logger = logging.getLogger("utils")
-handler = logging.FileHandler("../logs/utils.log", "w")
+handler = logging.FileHandler("./logs/utils.log", "w")
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-# file_path = "../data/operations.json" #раскомитить для проверки лигирования #раскомитить для проверки лигирования
+file_path = "../data/operations.json"  # раскомитить для проверки лигирования #раскомитить для проверки лигирования
 
 
 def get_transaction_data(file_path: str) -> list:
@@ -50,9 +50,7 @@ def transaction_sum(transaction: dict) -> float:
             elif (
                 transaction.get("operationAmount").get("currency").get("code") == "USD"
             ):
-                logger.info(
-                    "Транзакция совершена в валюте USD, получаем сумму транзакции"
-                )
+                logger.info("Транзакция совершена в валюте USD, получаем сумму транзакции")
                 usd_sum = float(transaction.get("operationAmount").get("amount"))
                 output_sum = amount_exchange(usd_sum, "USD", "RUB")
             elif (
