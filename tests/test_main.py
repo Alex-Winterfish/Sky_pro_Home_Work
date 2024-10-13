@@ -5,13 +5,15 @@ from src.main import main
 @patch("src.main.user_search_word")
 @patch("src.main.user_sorting_range")
 @patch("src.main.user_sorting")
+@patch("src.main.user_rub_sorting")
 @patch("src.main.user_sort_option")
 @patch("src.main.user_state_select")
 @patch("src.main.user_file_select")
-def test_main(
+def test_main_1(
     mock_file_select,
     mock_state_select,
     mock_sort_option,
+    mock_rub_sorting,
     mock_sorting,
     mock_sorting_range,
     mock_user_search_word,
@@ -20,6 +22,7 @@ def test_main(
     mock_file_select.return_value = "2"
     mock_state_select.return_value = "CANCELED"
     mock_sort_option.return_value = "ДА"
+    mock_rub_sorting.return_value = "НЕТ"
     mock_sorting.return_value = "ПО ВОЗРАСТАНИЮ"
     mock_sorting_range.return_value = "ДА"
     mock_user_search_word.return_value = "ОТКРЫТИЕ"

@@ -49,6 +49,10 @@ def user_sorting_range():
     a = input("Отсортировать по определенному слову? Да/Нет:\n Пользователь: ")
     return a
 
+def user_rub_sorting():
+    a = input("Выводить только рублевые операции? Да/Нет:\n Пользователь:").upper()
+    return a
+
 
 def main():
 
@@ -94,6 +98,16 @@ def main():
             filtered_data = sort_by_date(filtered_data, sort_options)
         else:
             filtered_data = sort_by_date(filtered_data)
+
+    rub_sorting = user_rub_sorting()
+
+    if rub_sorting == "ДА":
+        rub_transaction = list()
+        for i in range(len(filtered_data)): # цикл для перебор словарей в списке
+
+            if filtered_data[i].get("currency_code") == "RUB":
+                rub_transaction.append(filtered_data[i])
+        filtered_data = rub_transaction
 
     sort_option = user_sorting_range()
     if sort_option.upper() == "ДА":
